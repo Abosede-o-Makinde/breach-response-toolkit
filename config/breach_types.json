@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "description": "Breach type classification rules, GDPR article associations, and severity weights",
+  "data_type_weights": {
+    "basic_contact": {
+      "score": 15,
+      "gdpr_articles": ["Art. 6", "Art. 32"],
+      "description": "Name, email, address, phone"
+    },
+    "credentials": {
+      "score": 30,
+      "gdpr_articles": ["Art. 32(1)(b)", "Art. 5(1)(f)"],
+      "description": "Usernames, passwords, API keys, tokens"
+    },
+    "financial": {
+      "score": 35,
+      "gdpr_articles": ["Art. 32", "Art. 33"],
+      "description": "Bank details, card numbers, salary"
+    },
+    "health": {
+      "score": 40,
+      "gdpr_articles": ["Art. 9", "Art. 32", "Art. 33"],
+      "description": "Medical records — Article 9 special category"
+    },
+    "biometric": {
+      "score": 45,
+      "gdpr_articles": ["Art. 9", "Art. 32", "Art. 33", "Art. 34"],
+      "description": "Fingerprints, facial recognition — Article 9 special category"
+    },
+    "criminal": {
+      "score": 45,
+      "gdpr_articles": ["Art. 10", "Art. 32", "Art. 33"],
+      "description": "Criminal conviction or offence data — Article 10"
+    }
+  },
+  "scale_thresholds": [
+    { "max_records": 9, "score": 5 },
+    { "max_records": 99, "score": 10 },
+    { "max_records": 999, "score": 15 },
+    { "max_records": 9999, "score": 20 },
+    { "max_records": null, "score": 25 }
+  ],
+  "special_category_bonus": 20,
+  "encryption_reduction": -15,
+  "severity_bands": {
+    "LOW": { "min": 0, "max": 24.9 },
+    "MEDIUM": { "min": 25, "max": 49.9 },
+    "HIGH": { "min": 50, "max": 74.9 },
+    "CRITICAL": { "min": 75, "max": 100 }
+  },
+  "breach_types": {
+    "confidentiality": {
+      "label": "Confidentiality breach",
+      "description": "Unauthorised access or disclosure of personal data",
+      "gdpr_articles": ["Art. 5(1)(f)", "Art. 32(1)(b)", "Art. 33"]
+    },
+    "integrity": {
+      "label": "Integrity breach",
+      "description": "Unauthorised alteration of personal data",
+      "gdpr_articles": ["Art. 5(1)(d)", "Art. 5(1)(f)", "Art. 32"]
+    },
+    "availability": {
+      "label": "Availability breach",
+      "description": "Loss of access to personal data",
+      "gdpr_articles": ["Art. 5(1)(f)", "Art. 32(1)(b)", "Art. 33"]
+    },
+    "combined": {
+      "label": "Combined breach",
+      "description": "Multiple breach types affecting confidentiality, integrity, and/or availability",
+      "gdpr_articles": ["Art. 5(1)(f)", "Art. 32", "Art. 33", "Art. 34"]
+    }
+  },
+  "notification_rules": {
+    "ico_required_on_special_category": true,
+    "ico_required_on_severity": ["MEDIUM", "HIGH", "CRITICAL"],
+    "subject_required_on_severity": ["CRITICAL"],
+    "subject_required_on_special_category_high_risk": true
+  }
+}

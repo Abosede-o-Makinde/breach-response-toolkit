@@ -1,0 +1,61 @@
+# Breach Evidence Log — {{ breach_id }}
+
+> **Schema version:** {{ schema_version }}
+> **Created (UTC):** {{ created_utc }}
+> **Last updated (UTC):** {{ last_updated_utc }}
+> **Article 33(3) completeness:** {{ completeness_percent }}%
+
+---
+
+## Article 33(3)(a) — Nature of the Breach
+
+| Field | Value |
+|-------|-------|
+| Description | {{ fields.a_nature_of_breach.description }} |
+| Breach type | {{ fields.a_nature_of_breach.breach_type }} |
+| Data categories | {{ fields.a_nature_of_breach.categories_of_personal_data | join(', ') }} |
+| Approx. data subjects | {{ fields.a_nature_of_breach.approximate_data_subjects }} |
+| Approx. records | {{ fields.a_nature_of_breach.approximate_records }} |
+
+## Article 33(3)(b) — Contact Point
+
+| Field | Value |
+|-------|-------|
+| Name | {{ fields.b_dpo_contact.name }} |
+| Role | {{ fields.b_dpo_contact.role }} |
+| Email | {{ fields.b_dpo_contact.email }} |
+| Telephone | {{ fields.b_dpo_contact.telephone }} |
+
+## Article 33(3)(c) — Likely Consequences
+
+{% for consequence in fields.c_likely_consequences %}
+{{ loop.index }}. {{ consequence }}
+{% endfor %}
+
+## Article 33(3)(d) — Measures Taken
+
+{% for measure in fields.d_measures_taken %}
+{{ loop.index }}. {{ measure }}
+{% endfor %}
+
+---
+
+## Internal Tracking
+
+- **Detection (UTC):** {{ internal.detection_datetime_utc }}
+- **Notification deadline (UTC):** {{ internal.notification_deadline_utc }}
+- **Severity:** {{ internal.severity_classification.severity }} (score: {{ internal.severity_classification.score }})
+- **ICO notification required:** {{ internal.severity_classification.ico_notification_required }}
+- **Subject notification required:** {{ internal.severity_classification.subject_notification_required }}
+- **Timer alert level:** {{ internal.timer_snapshot.alert_level }}
+- **NIST framework:** {{ internal.nist_mapping.framework_reference }}
+
+---
+
+## Audit Trail
+
+| Timestamp (UTC) | Action | Actor |
+|-----------------|--------|-------|
+{% for entry in audit_trail %}
+| {{ entry.timestamp_utc }} | {{ entry.action }} | {{ entry.actor }} |
+{% endfor %}

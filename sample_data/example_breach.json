@@ -1,0 +1,39 @@
+{
+  "breach_id": "B-2024-001",
+  "detection_datetime": "2024-06-09T14:30:00Z",
+  "data_type": "financial",
+  "records_affected": 1500,
+  "special_category_involved": false,
+  "data_encrypted": false,
+  "breach_type": "confidentiality",
+  "description": "Unauthorised access to customer financial records via SQL injection in the payment portal",
+  "affected_data_categories": [
+    "bank account numbers",
+    "sort codes",
+    "full names",
+    "transaction references"
+  ],
+  "estimated_data_subjects": 1500,
+  "estimated_records": 1500,
+  "root_cause": "Unpatched SQL injection vulnerability in payment portal — CVE-2024-XXXXX",
+  "dpo_contact": {
+    "name": "Jane Smith",
+    "role": "Data Protection Officer",
+    "email": "dpo@organisation.com",
+    "telephone": "01234 567890"
+  },
+  "likely_consequences": [
+    "Financial fraud using exposed bank account numbers and sort codes",
+    "Identity theft risk for 1,500 affected customers",
+    "Potential regulatory action from the ICO"
+  ],
+  "measures_taken": [
+    "Payment portal taken offline at 15:00 UTC on 9 June 2024",
+    "Incident response team engaged; forensic investigation commenced",
+    "Affected customers notified by email at 18:00 UTC on 9 June 2024",
+    "SQL injection vulnerability patched; security scan in progress"
+  ],
+  "controller_name": "Example Ltd",
+  "ico_registration_number": "ZA123456",
+  "controller_address": "1 Example Street, London, EC1A 1BB"
+}

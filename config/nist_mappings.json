@@ -1,0 +1,140 @@
+{
+  "version": "NIST CSF v1.1",
+  "breach_type_mappings": {
+    "CONFIDENTIALITY": {
+      "primary_functions": ["PROTECT", "DETECT"],
+      "failed_controls": [
+        {
+          "function": "PROTECT",
+          "category": "PR.AC",
+          "subcategory": "PR.AC-4",
+          "description": "Access permissions and authorisations not managed per least privilege",
+          "gdpr_article": "Art. 32(1)(b) — ensuring ongoing confidentiality"
+        },
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-1",
+          "description": "Data-at-rest not protected via encryption",
+          "gdpr_article": "Art. 32(1)(a) — pseudonymisation and encryption"
+        },
+        {
+          "function": "DETECT",
+          "category": "DE.CM",
+          "subcategory": "DE.CM-1",
+          "description": "Network not monitored to detect potential cybersecurity events",
+          "gdpr_article": "Art. 32(1)(d) — testing security measures"
+        }
+      ],
+      "recommendations": [
+        {
+          "function": "PROTECT",
+          "category": "PR.AC",
+          "subcategory": "PR.AC-5",
+          "recommendation": "Implement network segmentation and access reviews",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 32(1)(b)"
+        },
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-1",
+          "recommendation": "Encrypt sensitive personal data at rest using industry-standard algorithms",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 32(1)(a)"
+        }
+      ]
+    },
+    "INTEGRITY": {
+      "primary_functions": ["PROTECT", "DETECT"],
+      "failed_controls": [
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-6",
+          "description": "Integrity checking mechanisms not used to verify software and data integrity",
+          "gdpr_article": "Art. 5(1)(d) — accuracy of personal data"
+        },
+        {
+          "function": "DETECT",
+          "category": "DE.CM",
+          "subcategory": "DE.CM-7",
+          "description": "Monitoring for unauthorised personnel, connections, devices, and software",
+          "gdpr_article": "Art. 32(1)(d) — testing security measures"
+        }
+      ],
+      "recommendations": [
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-6",
+          "recommendation": "Implement integrity verification for critical data stores",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 5(1)(d)"
+        }
+      ]
+    },
+    "AVAILABILITY": {
+      "primary_functions": ["PROTECT", "RECOVER"],
+      "failed_controls": [
+        {
+          "function": "PROTECT",
+          "category": "PR.IP",
+          "subcategory": "PR.IP-4",
+          "description": "Backups of information not conducted, maintained, and tested",
+          "gdpr_article": "Art. 32(1)(c) — ability to restore availability"
+        },
+        {
+          "function": "RECOVER",
+          "category": "RC.RP",
+          "subcategory": "RC.RP-1",
+          "description": "Recovery plan not executed during or after a cybersecurity incident",
+          "gdpr_article": "Art. 32(1)(c) — resilience of processing systems"
+        }
+      ],
+      "recommendations": [
+        {
+          "function": "RECOVER",
+          "category": "RC.RP",
+          "subcategory": "RC.RP-1",
+          "recommendation": "Execute and test disaster recovery procedures for critical systems",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 32(1)(c)"
+        }
+      ]
+    },
+    "COMBINED": {
+      "primary_functions": ["IDENTIFY", "PROTECT", "DETECT", "RESPOND", "RECOVER"],
+      "failed_controls": [
+        {
+          "function": "IDENTIFY",
+          "category": "ID.RA",
+          "subcategory": "ID.RA-1",
+          "description": "Asset vulnerabilities not identified and documented",
+          "gdpr_article": "Art. 32 — security of processing"
+        },
+        {
+          "function": "RESPOND",
+          "category": "RS.RP",
+          "subcategory": "RS.RP-1",
+          "description": "Response plan not executed during or after an incident",
+          "gdpr_article": "Art. 33 — breach notification obligations"
+        }
+      ],
+      "recommendations": [
+        {
+          "function": "RESPOND",
+          "category": "RS.CO",
+          "subcategory": "RS.CO-2",
+          "recommendation": "Establish incident response communications with stakeholders and regulators",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 33(1)"
+        }
+      ]
+    }
+  },
+  "severity_escalations": {
+    "CRITICAL": ["RS.RP-1", "RC.RP-1"],
+    "HIGH": ["RS.CO-2"]
+  }
+}

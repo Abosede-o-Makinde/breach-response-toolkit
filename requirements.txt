@@ -1,0 +1,12 @@
+click==8.1.7
+rich==13.7.1
+pydantic==2.6.4
+email-validator==2.1.1
+python-dateutil==2.9.0
+fpdf2==2.7.9
+jinja2==3.1.4
+pytest==7.4.4
+pytest-cov==4.1.0
+freezegun==1.4.0
+ruff==0.4.1
+black==24.3.0

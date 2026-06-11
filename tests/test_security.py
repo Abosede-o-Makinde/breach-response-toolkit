@@ -1,0 +1,19 @@
+"""Security tests — target: 6 tests."""
+
+import pytest
+
+pytestmark = pytest.mark.skip(reason="Security tests pending full pipeline — scaffold phase")
+
+
+class TestInputSecurity:
+    def test_sql_injection_string_in_description_does_not_raise(self) -> None: ...
+
+    def test_path_traversal_in_breach_id_rejected(self) -> None: ...
+
+    def test_script_tag_in_description_stored_as_plain_text(self) -> None: ...
+
+    def test_output_files_stay_within_output_directory(self) -> None: ...
+
+    def test_very_long_string_input_accepted_gracefully(self) -> None: ...
+
+    def test_no_outbound_network_calls_during_report_generation(self) -> None: ...
