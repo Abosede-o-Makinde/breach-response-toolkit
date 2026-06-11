@@ -47,15 +47,95 @@ class BreachTimer:
 
     def get_status(self) -> TimerStatus:
         """Calculate current timer state from UTC now(). Pure — no side effects."""
-        raise NotImplementedError("Timer status calculation not yet implemented.")
+        now = datetime.now(UTC)
+        elapsed_hours = (now - self.detection_datetime).total_seconds() / 3600
+        remaining_hours = max(0.0, self.NOTIFICATION_WINDOW_HOURS - elapsed_hours)
+        elapsed_pct = min(100.0, (elapsed_hours / self.NOTIFICATION_WINDOW_HOURS) * 100)
+
+        if elapsed_hours >= self.NOTIFICATION_WINDOW_HOURS:
+            alert_level = AlertLevel.EXPIRED
+        elif elapsed_hours >= self.CRITICAL_THRESHOLD_HOURS:
+            alert_level = AlertLevel.CRITICAL
+        elif elapsed_hours >= self.WARNING_THRESHOLD_HOURS:
+            alert_level = AlertLevel.WARNING
+        else:
+            alert_level = AlertLevel.OK
+
+        return TimerStatus(
+            breach_id=self.breach_id,
+            detection_datetime=self.detection_datetime,
+            current_datetime=now,
+            elapsed_hours=round(elapsed_hours, 2),
+            remaining_hours=round(remaining_hours, 2),
+            elapsed_percentage=round(elapsed_pct, 1),
+            alert_level=alert_level,
+            notification_deadline=self.detection_datetime
+            + timedelta(hours=self.NOTIFICATION_WINDOW_HOURS),
+            is_expired=elapsed_hours >= self.NOTIFICATION_WINDOW_HOURS,
+            requires_ico_notification=True,
+        )
 
     def display(self) -> None:
         """Render a Rich terminal panel showing timer state."""
-        raise NotImplementedError("Timer display not yet implemented.")
+        from rich.panel import Panel
+        from rich.progress import BarColumn, Progress, TextColumn
+        from rich.table import Table
+
+        status = self.get_status()
+        colour_map = {
+            AlertLevel.OK: "green",
+            AlertLevel.WARNING: "yellow",
+            AlertLevel.CRITICAL: "red",
+            AlertLevel.EXPIRED: "bright_red",
+        }
+        alert_messages = {
+            AlertLevel.OK: "Within notification window — continue evidence gathering.",
+            AlertLevel.WARNING: "48 hours elapsed — escalate to DPO and prepare ICO notification.",
+            AlertLevel.CRITICAL: "68 hours elapsed — submit ICO notification immediately.",
+            AlertLevel.EXPIRED: "72-hour window exceeded — notify ICO without delay and document late submission.",
+        }
+        colour = colour_map[status.alert_level]
+
+        table = Table.grid(padding=(0, 1))
+        table.add_row("Breach ID:", status.breach_id)
+        table.add_row("Detected (UTC):", status.detection_datetime.isoformat())
+        table.add_row("Elapsed:", f"{status.elapsed_hours:.2f} hours")
+        table.add_row("Remaining:", f"{status.remaining_hours:.2f} hours")
+        table.add_row("Deadline (UTC):", status.notification_deadline.isoformat())
+        table.add_row("Status:", f"[{colour}]{status.alert_level.value}[/{colour}]")
+        table.add_row("", alert_messages[status.alert_level])
+
+        progress = Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(bar_width=40, complete_style=colour, finished_style=colour),
+            TextColumn("{task.percentage:>3.0f}%"),
+        )
+        progress.add_task("Window elapsed", total=100, completed=status.elapsed_percentage)
+
+        from rich.console import Console
+
+        console = Console()
+        console.print(
+            Panel(
+                table,
+                title="GDPR ARTICLE 33 — BREACH TIMER",
+                border_style=colour,
+            )
+        )
+        console.print(progress)
 
     def to_dict(self) -> dict:
         """Return a JSON-serialisable timer snapshot for the evidence log."""
-        raise NotImplementedError("Timer serialisation not yet implemented.")
+        status = self.get_status()
+        return {
+            "elapsed_hours": status.elapsed_hours,
+            "remaining_hours": status.remaining_hours,
+            "elapsed_percentage": status.elapsed_percentage,
+            "alert_level": status.alert_level.value,
+            "notification_deadline": status.notification_deadline.isoformat(),
+            "is_expired": status.is_expired,
+            "snapshot_utc": status.current_datetime.isoformat(),
+        }
 
     @classmethod
     def _validate_detection_datetime(cls, detection_datetime: datetime) -> datetime:
