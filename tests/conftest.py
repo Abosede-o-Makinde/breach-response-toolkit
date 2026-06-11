@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -14,7 +14,7 @@ from src.models.breach_model import BreachInput, BreachType, DataType, DPOContac
 def sample_breach_input() -> BreachInput:
     return BreachInput(
         breach_id="B-TEST-001",
-        detection_datetime=datetime.now(timezone.utc) - timedelta(hours=10),
+        detection_datetime=datetime.now(UTC) - timedelta(hours=10),
         data_type=DataType.FINANCIAL,
         records_affected=1500,
         special_category_involved=False,

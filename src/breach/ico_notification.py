@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -59,4 +59,4 @@ class ICONotificationGenerator:
 
     @staticmethod
     def _utcnow() -> datetime:
-        return datetime.now(timezone.utc)
+        return datetime.now(UTC)

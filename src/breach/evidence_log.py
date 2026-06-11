@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -82,7 +82,7 @@ class EvidenceLog:
 
     @staticmethod
     def _utcnow() -> datetime:
-        return datetime.now(timezone.utc)
+        return datetime.now(UTC)
 
     @staticmethod
     def _resolve_safe_path(output_dir: Path, breach_id: str, filename: str) -> Path:

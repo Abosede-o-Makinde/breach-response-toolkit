@@ -69,7 +69,7 @@ class TestBreachInputValidation:
         assert sample_breach_input.data_type == DataType.FINANCIAL
 
     def test_invalid_breach_id_rejected(self) -> None:
-        from datetime import datetime, timezone
+        from datetime import UTC, datetime
 
         from pydantic import ValidationError
 
@@ -78,7 +78,7 @@ class TestBreachInputValidation:
         with pytest.raises(ValidationError):
             BreachInput(
                 breach_id="../bad",
-                detection_datetime=datetime.now(timezone.utc),
+                detection_datetime=datetime.now(UTC),
                 data_type=DataType.BASIC_CONTACT,
                 records_affected=1,
                 breach_type=BreachType.CONFIDENTIALITY,
@@ -96,19 +96,19 @@ class TestBreachInputValidation:
 
 class TestTimerValidation:
     def test_future_detection_datetime_rejected(self) -> None:
-        from datetime import datetime, timedelta, timezone
+        from datetime import UTC, datetime, timedelta
 
         from src.breach.timer import BreachTimer
 
-        future = datetime.now(timezone.utc) + timedelta(hours=1)
+        future = datetime.now(UTC) + timedelta(hours=1)
         with pytest.raises(ValueError, match="cannot be in the future"):
             BreachTimer(future, "B-001")
 
     def test_path_traversal_in_breach_id_rejected(self) -> None:
-        from datetime import datetime, timedelta, timezone
+        from datetime import UTC, datetime, timedelta
 
         from src.breach.timer import BreachTimer
 
-        past = datetime.now(timezone.utc) - timedelta(hours=5)
+        past = datetime.now(UTC) - timedelta(hours=5)
         with pytest.raises(ValueError, match="Invalid breach_id"):
             BreachTimer(past, "../../etc/passwd")

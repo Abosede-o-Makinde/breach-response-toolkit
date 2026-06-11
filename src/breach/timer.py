@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import warnings
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from enum import Enum
 
 
@@ -65,9 +65,9 @@ class BreachTimer:
                 UserWarning,
                 stacklevel=2,
             )
-            detection_datetime = detection_datetime.replace(tzinfo=timezone.utc)
+            detection_datetime = detection_datetime.replace(tzinfo=UTC)
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         if detection_datetime > now:
             raise ValueError("Detection datetime cannot be in the future")
 
