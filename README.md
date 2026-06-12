@@ -8,7 +8,7 @@
 > Python toolkit for managing data breach incidents under UK GDPR Articles 33 and 34.
 > 72-hour ICO countdown · Severity classifier · NIST CSF mapper · Article 33(3) evidence log
 
-**Current status:** Day 3 of the sprint — timer, classifier, and NIST mapper are done. Evidence log is today's focus (days 3–4 block).
+**Current status:** Days 5–6 in progress — ICO notification draft generator is live. PDF report and full pipeline are next.
 
 ---
 
@@ -40,8 +40,8 @@ Two layers from the developer brief and blueprint:
 | ---- | --------------- | ----- | ------ |
 | — | Before 9 Jun | Repo scaffold + architecture | Done |
 | 1–2 | 9–10 Jun | `breach_model.py`, `timer.py`, `classifier.py` + tests | Done |
-| 3–4 | 11–12 Jun | `nist_mapper.py`, `evidence_log.py` + tests | In progress (NIST done) |
-| 5–6 | 13–14 Jun | `ico_notification.py`, templates, `main.py` CLI wiring | Pending |
+| 3–4 | 11–12 Jun | `nist_mapper.py`, `evidence_log.py` + tests | Done |
+| 5–6 | 13–14 Jun | `ico_notification.py`, templates, `main.py` CLI wiring | In progress (ICO draft done) |
 | 7–8 | 15–16 Jun | `pdf_report.py` | Pending |
 | 9–10 | 17–18 Jun | Full pipeline, `sample_outputs/`, security tests | Pending |
 | 11–12 | 19–22 Jun | CI polish, docs, README screenshots, v1.0.0 tag | Pending |
@@ -58,9 +58,9 @@ These are the **build order** from [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 
 | 1 | `timer.py` | 1–2 | 12 ✓ |
 | 2 | `classifier.py` | 1–2 | 15 ✓ |
 | 3 | `nist_mapper.py` | 3–4 | 10 ✓ |
-| 4 | `evidence_log.py` | 3–4 | 8 (target) ← **next** |
-| 5 | `ico_notification.py` | 5–6 | 8 (target) |
-| 6 | `pdf_report.py` | 7–8 | — |
+| 4 | `evidence_log.py` | 3–4 | 8 ✓ |
+| 5 | `ico_notification.py` | 5–6 | 8 ✓ |
+| 6 | `pdf_report.py` | 7–8 | — ← **next** |
 | 7 | `pipeline.py` + `--mode report` | 9–10 | — |
 | 8 | Sample outputs, release | 11–12 | — |
 
@@ -81,7 +81,7 @@ breach-response-toolkit/
 ├── docs/                      # Architecture + practitioner guides
 ├── sample_data/               # Example breach input JSON
 ├── sample_outputs/            # Pre-generated examples (phase 8)
-├── tests/                     # 37 passing module tests so far
+├── tests/                     # 53 passing module tests so far
 └── .github/workflows/         # CI/CD: test + release pipelines
 ```
 
@@ -104,7 +104,7 @@ python main.py --help
 | `python main.py --mode classify` | **Working** | Severity classification from breach JSON |
 | `python main.py --mode nist` | **Working** | NIST CSF breach mapping |
 | `python main.py --mode report` | Pending | Full breach report pipeline |
-| `python main.py --mode notify` | Pending | ICO notification draft from evidence log |
+| `python main.py --mode notify` | **Working** | ICO notification draft from breach JSON |
 
 ### Working now
 
@@ -117,6 +117,9 @@ python main.py --mode classify --input sample_data/example_breach.json
 
 # NIST CSF mapping for a confidentiality breach at HIGH severity
 python main.py --mode nist --breach-type confidentiality --data-type financial --severity HIGH
+
+# ICO notification draft for DPO review
+python main.py --mode notify --input sample_data/example_breach.json
 ```
 
 ### Coming in later phases

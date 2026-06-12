@@ -18,6 +18,7 @@ from rich.console import Console
 
 from src import __version__
 from src.breach.classifier import BreachClassifier
+from src.breach.ico_notification import ICONotificationGenerator
 from src.breach.nist_mapper import NISTMapper
 from src.breach.timer import BreachTimer
 from src.models.breach_model import BreachInput, BreachType, DataType, SeverityLevel
@@ -176,7 +177,24 @@ def _run_nist(options: dict) -> None:
 
 
 def _run_notify(options: dict) -> None:
-    raise NotImplementedError("Notify mode requires an existing evidence log — not yet implemented.")
+    if not options["input_path"]:
+        raise click.ClickException("Notify mode requires --input <breach.json>.")
+
+    breach = _load_breach_input(options["input_path"])
+    timer = BreachTimer(breach.detection_datetime, breach.breach_id)
+    classification = BreachClassifier().classify(breach)
+    generator = ICONotificationGenerator()
+    draft = generator.generate(breach, classification, timer.get_status())
+
+    output_path = options["output_dir"] / breach.breach_id / "ico_notification.txt"
+    written = generator.to_file(draft, output_path)
+
+    for warning in draft.warnings:
+        console.print(f"[yellow]Warning:[/yellow] {warning}")
+    console.print(
+        f"[green]ICO notification draft written[/green] "
+        f"({draft.completeness_percent:.0f}% complete): {written}"
+    )
 
 
 if __name__ == "__main__":
