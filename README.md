@@ -8,7 +8,7 @@
 > Python toolkit for managing data breach incidents under UK GDPR Articles 33 and 34.
 > 72-hour ICO countdown · Severity classifier · NIST CSF mapper · Article 33(3) evidence log
 
-**Current status:** Days 5–6 in progress — ICO notification draft generator is live. PDF report and full pipeline are next.
+**Current status:** Days 7–8 complete — PDF breach report generator is live. Full pipeline integration is next (days 9–10).
 
 ---
 
@@ -41,9 +41,9 @@ Two layers from the developer brief and blueprint:
 | — | Before 9 Jun | Repo scaffold + architecture | Done |
 | 1–2 | 9–10 Jun | `breach_model.py`, `timer.py`, `classifier.py` + tests | Done |
 | 3–4 | 11–12 Jun | `nist_mapper.py`, `evidence_log.py` + tests | Done |
-| 5–6 | 13–14 Jun | `ico_notification.py`, templates, `main.py` CLI wiring | In progress (ICO draft done) |
-| 7–8 | 15–16 Jun | `pdf_report.py` | Pending |
-| 9–10 | 17–18 Jun | Full pipeline, `sample_outputs/`, security tests | Pending |
+| 5–6 | 13–14 Jun | `ico_notification.py`, templates, `main.py` CLI wiring | Done |
+| 7–8 | 15–16 Jun | `pdf_report.py` | Done |
+| 9–10 | 17–18 Jun | Full pipeline, `sample_outputs/`, security tests | Next |
 | 11–12 | 19–22 Jun | CI polish, docs, README screenshots, v1.0.0 tag | Pending |
 
 **Deadline:** v1.0.0 by **22 June 2026** · ≥57 tests · ≥85% coverage
@@ -60,8 +60,8 @@ These are the **build order** from [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 
 | 3 | `nist_mapper.py` | 3–4 | 10 ✓ |
 | 4 | `evidence_log.py` | 3–4 | 8 ✓ |
 | 5 | `ico_notification.py` | 5–6 | 8 ✓ |
-| 6 | `pdf_report.py` | 7–8 | — ← **next** |
-| 7 | `pipeline.py` + `--mode report` | 9–10 | — |
+| 6 | `pdf_report.py` | 7–8 | 8 ✓ |
+| 7 | `pipeline.py` + `--mode report` | 9–10 | — ← **next** |
 | 8 | Sample outputs, release | 11–12 | — |
 
 ---
@@ -81,7 +81,7 @@ breach-response-toolkit/
 ├── docs/                      # Architecture + practitioner guides
 ├── sample_data/               # Example breach input JSON
 ├── sample_outputs/            # Pre-generated examples (phase 8)
-├── tests/                     # 53 passing module tests so far
+├── tests/                     # 61 passing module tests so far
 └── .github/workflows/         # CI/CD: test + release pipelines
 ```
 
