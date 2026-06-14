@@ -8,7 +8,7 @@
 > Python toolkit for managing data breach incidents under UK GDPR Articles 33 and 34.
 > 72-hour ICO countdown · Severity classifier · NIST CSF mapper · Article 33(3) evidence log
 
-**Current status:** Days 7–8 complete — PDF breach report generator is live. Full pipeline integration is next (days 9–10).
+**Current status:** Days 9–10 complete — full report pipeline, sample outputs, and security tests are live. Release polish next (days 11–12).
 
 ---
 
@@ -43,8 +43,8 @@ Two layers from the developer brief and blueprint:
 | 3–4 | 11–12 Jun | `nist_mapper.py`, `evidence_log.py` + tests | Done |
 | 5–6 | 13–14 Jun | `ico_notification.py`, templates, `main.py` CLI wiring | Done |
 | 7–8 | 15–16 Jun | `pdf_report.py` | Done |
-| 9–10 | 17–18 Jun | Full pipeline, `sample_outputs/`, security tests | Next |
-| 11–12 | 19–22 Jun | CI polish, docs, README screenshots, v1.0.0 tag | Pending |
+| 9–10 | 17–18 Jun | Full pipeline, `sample_outputs/`, security tests | Done |
+| 11–12 | 19–22 Jun | CI polish, docs, README screenshots, v1.0.0 tag | Next |
 
 **Deadline:** v1.0.0 by **22 June 2026** · ≥57 tests · ≥85% coverage
 
@@ -61,8 +61,9 @@ These are the **build order** from [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 
 | 4 | `evidence_log.py` | 3–4 | 8 ✓ |
 | 5 | `ico_notification.py` | 5–6 | 8 ✓ |
 | 6 | `pdf_report.py` | 7–8 | 8 ✓ |
-| 7 | `pipeline.py` + `--mode report` | 9–10 | — ← **next** |
-| 8 | Sample outputs, release | 11–12 | — |
+| 7 | `pipeline.py` + `--mode report` | 9–10 | 8 ✓ |
+| 8 | Sample outputs, security tests | 9–10 | 6 ✓ |
+| 9 | Release, docs polish | 11–12 | — ← **next** |
 
 ---
 
@@ -80,8 +81,8 @@ breach-response-toolkit/
 ├── templates/                 # Jinja2: ICO notification, Markdown evidence log
 ├── docs/                      # Architecture + practitioner guides
 ├── sample_data/               # Example breach input JSON
-├── sample_outputs/            # Pre-generated examples (phase 8)
-├── tests/                     # 61 passing module tests so far
+├── sample_outputs/            # Pre-generated examples (see sample_outputs/README.md)
+├── tests/                     # 84 passing tests
 └── .github/workflows/         # CI/CD: test + release pipelines
 ```
 
@@ -103,7 +104,7 @@ python main.py --help
 | `python main.py --mode timer` | **Working** | 72-hour Article 33 countdown |
 | `python main.py --mode classify` | **Working** | Severity classification from breach JSON |
 | `python main.py --mode nist` | **Working** | NIST CSF breach mapping |
-| `python main.py --mode report` | Pending | Full breach report pipeline |
+| `python main.py --mode report` | **Working** | Full breach report pipeline |
 | `python main.py --mode notify` | **Working** | ICO notification draft from breach JSON |
 
 ### Working now
@@ -120,13 +121,19 @@ python main.py --mode nist --breach-type confidentiality --data-type financial -
 
 # ICO notification draft for DPO review
 python main.py --mode notify --input sample_data/example_breach.json
+
+# Full report pipeline — all four output files under outputs/{breach_id}/
+python main.py --mode report --input sample_data/example_breach.json --output outputs/
 ```
 
-### Coming in later phases
+Pre-generated examples are in [`sample_outputs/B-2024-001/`](sample_outputs/B-2024-001/).
+
+### Sample outputs (no run required)
 
 ```bash
-# Full report pipeline (phase 7)
-python main.py --mode report --input sample_data/example_breach.json --output outputs/
+# Inspect pre-generated artefacts from the README
+ls sample_outputs/B-2024-001/
+# evidence_log.json  evidence_log.md  ico_notification.txt  breach_report.pdf
 ```
 
 ---
@@ -136,7 +143,7 @@ python main.py --mode report --input sample_data/example_breach.json --output ou
 | Article | Obligation | Module | Status |
 | ------- | ---------- | ------ | ------ |
 | **Art. 33(1)** | Notify ICO within 72 hours | `timer.py` | Done |
-| **Art. 33(3)(a–d)** | Four mandatory notification fields | `evidence_log.py` | Phase 4 |
+| **Art. 33(3)(a–d)** | Four mandatory notification fields | `evidence_log.py` | Done |
 | **Art. 34(1)** | Notify data subjects if high risk | `classifier.py` | Done |
 | **Art. 5(1)(f)** | Integrity and confidentiality | `nist_mapper.py` | Done |
 

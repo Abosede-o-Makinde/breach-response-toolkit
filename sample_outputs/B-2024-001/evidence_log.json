@@ -1,0 +1,138 @@
+{
+  "breach_id": "B-2024-001",
+  "schema_version": "1.0",
+  "created_utc": "2026-06-14T16:03:22.521327+00:00",
+  "last_updated_utc": "2026-06-14T16:03:22.521327+00:00",
+  "article_33_3_completeness_percent": 100.0,
+  "article_33_3_fields": {
+    "a_nature_of_breach": {
+      "description": "Unauthorised access to customer financial records via SQL injection in the payment portal",
+      "breach_type": "CONFIDENTIALITY",
+      "categories_of_personal_data": [
+        "bank account numbers",
+        "sort codes",
+        "full names",
+        "transaction references"
+      ],
+      "approximate_data_subjects": 1500,
+      "approximate_records": 1500
+    },
+    "b_dpo_contact": {
+      "name": "Jane Smith",
+      "role": "Data Protection Officer",
+      "email": "dpo@organisation.com",
+      "telephone": "01234 567890"
+    },
+    "c_likely_consequences": [
+      "Financial fraud using exposed bank account numbers and sort codes",
+      "Identity theft risk for 1,500 affected customers",
+      "Potential regulatory action from the ICO"
+    ],
+    "d_measures_taken": [
+      "Payment portal taken offline at 15:00 UTC on 9 June 2024",
+      "Incident response team engaged; forensic investigation commenced",
+      "Affected customers notified by email at 18:00 UTC on 9 June 2024",
+      "SQL injection vulnerability patched; security scan in progress"
+    ]
+  },
+  "internal_tracking": {
+    "detection_datetime_utc": "2024-06-09T14:30:00+00:00",
+    "notification_deadline_utc": "2024-06-12T14:30:00+00:00",
+    "controller_name": "Example Ltd",
+    "ico_registration_number": "ZA123456",
+    "timer_snapshot": {
+      "elapsed_hours": 17641.56,
+      "remaining_hours": 0.0,
+      "elapsed_percentage": 100.0,
+      "alert_level": "EXPIRED",
+      "notification_deadline": "2024-06-12T14:30:00+00:00",
+      "is_expired": true,
+      "snapshot_utc": "2026-06-14T16:03:22.521327+00:00"
+    },
+    "severity_classification": {
+      "severity": "HIGH",
+      "score": 55.0,
+      "breakdown": {
+        "data_type_score": 35.0,
+        "scale_score": 20.0,
+        "special_category_bonus": 0.0,
+        "encryption_reduction": 0.0,
+        "total": 55.0
+      },
+      "ico_notification_required": true,
+      "subject_notification_required": false,
+      "reasoning": "Severity assessed as HIGH (score 55.0/100) for breach B-2024-001. Primary data category: financial, affecting approximately 1,500 records. No Article 9 special category data identified in this assessment. Affected data was not encrypted, increasing exposure. ICO notification required; data subject notification not automatically indicated.",
+      "recommended_actions": [
+        "Preserve forensic evidence and maintain an append-only incident log.",
+        "Confirm DPO availability and review the 72-hour ICO notification timeline.",
+        "Prepare a draft ICO notification under Article 33(3) for legal review.",
+        "Assess whether affected individuals must be notified under Article 34.",
+        "Review encryption controls for data at rest (Art. 32(1)(a)) as a priority remediation."
+      ]
+    },
+    "nist_mapping": {
+      "framework_reference": "NIST CSF v1.1",
+      "functions_impacted": [
+        "PROTECT",
+        "DETECT"
+      ],
+      "failed_controls_count": 4,
+      "top_failed_control": "PR.AC-4 — Access permissions and authorisations not managed per least privilege",
+      "failed_controls": [
+        {
+          "function": "PROTECT",
+          "category": "PR.AC",
+          "subcategory": "PR.AC-4",
+          "description": "Access permissions and authorisations not managed per least privilege",
+          "gdpr_article": "Art. 32(1)(b) — ensuring ongoing confidentiality"
+        },
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-1",
+          "description": "Data-at-rest not protected via encryption",
+          "gdpr_article": "Art. 32(1)(a) — pseudonymisation and encryption"
+        },
+        {
+          "function": "DETECT",
+          "category": "DE.CM",
+          "subcategory": "DE.CM-1",
+          "description": "Network not monitored to detect potential cybersecurity events",
+          "gdpr_article": "Art. 32(1)(d) — testing security measures"
+        },
+        {
+          "function": "RESPOND",
+          "category": "RS.CO",
+          "subcategory": "RS.CO-2",
+          "description": "Severity escalation — control RS.CO-2 requires immediate attention",
+          "gdpr_article": "Art. 32 — security of processing"
+        }
+      ],
+      "recommended_controls": [
+        {
+          "function": "PROTECT",
+          "category": "PR.AC",
+          "subcategory": "PR.AC-5",
+          "recommendation": "Implement network segmentation and access reviews",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 32(1)(b)"
+        },
+        {
+          "function": "PROTECT",
+          "category": "PR.DS",
+          "subcategory": "PR.DS-1",
+          "recommendation": "Encrypt sensitive personal data at rest using industry-standard algorithms",
+          "priority": "IMMEDIATE",
+          "gdpr_article": "Art. 32(1)(a)"
+        }
+      ]
+    }
+  },
+  "audit_trail": [
+    {
+      "timestamp_utc": "2026-06-14T16:03:22.521327+00:00",
+      "action": "LOG_CREATED",
+      "actor": "breach-response-toolkit v1.0.0"
+    }
+  ]
+}

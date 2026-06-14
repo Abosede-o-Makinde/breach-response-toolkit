@@ -15,6 +15,8 @@ import click
 from dateutil import parser as date_parser
 from pydantic import ValidationError
 from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 
 from src import __version__
 from src.breach.classifier import BreachClassifier
@@ -22,7 +24,7 @@ from src.breach.ico_notification import ICONotificationGenerator
 from src.breach.nist_mapper import NISTMapper
 from src.breach.timer import BreachTimer
 from src.models.breach_model import BreachInput, BreachType, DataType, SeverityLevel
-from src.pipeline import BreachReportPipeline
+from src.pipeline import BreachReportPipeline, PipelineResult
 
 console = Console()
 DEFAULT_OUTPUT_DIR = Path("outputs")
@@ -139,7 +141,63 @@ def _run_report(options: dict) -> None:
 
     pipeline = BreachReportPipeline(output_dir=options["output_dir"])
     result = pipeline.run(breach)
-    console.print(f"[green]Report complete.[/green] Breach ID: {result.breach_id}")
+    _print_report_summary(result)
+
+
+def _print_report_summary(result: PipelineResult) -> None:
+    """Render a Rich terminal summary after a full pipeline run."""
+    data = result.report_data
+    severity = data.classification.severity.value
+    severity_colour = {
+        "LOW": "green",
+        "MEDIUM": "yellow",
+        "HIGH": "dark_orange",
+        "CRITICAL": "red",
+    }.get(severity, "white")
+
+    table = Table.grid(padding=(0, 1))
+    table.add_row("Breach ID:", result.breach_id)
+    table.add_row(
+        "Severity:",
+        f"[{severity_colour}]{severity}[/{severity_colour}] ({data.classification.score:.0f}/100)",
+    )
+    table.add_row(
+        "ICO notification:",
+        "Required" if data.classification.ico_notification_required else "Not required",
+    )
+    table.add_row(
+        "Subject notification:",
+        "Required" if data.classification.subject_notification_required else "Not required",
+    )
+    table.add_row("Timer alert:", data.timer.alert_level)
+    table.add_row(
+        "Evidence log completeness:",
+        f"{data.evidence_log.article_33_3_completeness_percent:.0f}%",
+    )
+    table.add_row(
+        "NIST failed controls:",
+        str(data.nist_mapping.failed_controls_count),
+    )
+
+    console.print(
+        Panel(
+            table,
+            title="BREACH REPORT PIPELINE COMPLETE",
+            border_style="green",
+        )
+    )
+
+    for warning in result.ico_warnings:
+        console.print(f"[yellow]ICO draft warning:[/yellow] {warning}")
+
+    console.print("\n[bold]Output files:[/bold]")
+    for label, path in [
+        ("Evidence log (JSON)", result.output_paths.evidence_log_json),
+        ("Evidence log (Markdown)", result.output_paths.evidence_log_md),
+        ("ICO notification draft", result.output_paths.ico_notification),
+        ("PDF report", result.output_paths.pdf_report),
+    ]:
+        console.print(f"  {label}: [cyan]{path}[/cyan]")
 
 
 def _run_timer(options: dict) -> None:

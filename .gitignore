@@ -9,7 +9,7 @@ outputs/*/
 data/breaches/*/
 !data/breaches/.gitkeep
 *.pdf
-!sample_outputs/*.pdf
+!sample_outputs/**/*.pdf
 .coverage
 htmlcov/
 dist/
