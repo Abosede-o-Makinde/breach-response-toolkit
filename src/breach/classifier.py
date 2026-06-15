@@ -168,13 +168,19 @@ class BreachClassifier:
             if breach.special_category_involved
             else "No Article 9 special category data identified in this assessment."
         )
+        ico_line = (
+            "required" if ico_required else "not indicated by score alone"
+        )
+        subject_line = (
+            "required" if subject_required else "not automatically indicated"
+        )
         return (
             f"Severity assessed as {severity.value} (score {score:.1f}/100) "
             f"for breach {breach.breach_id}. Primary data category: {data_label}, "
             f"affecting approximately {breach.records_affected:,} records. "
             f"{special_note} {encryption_note} "
-            f"ICO notification {'required' if ico_required else 'not indicated by score alone'}; "
-            f"data subject notification {'required' if subject_required else 'not automatically indicated'}."
+            f"ICO notification {ico_line}; "
+            f"data subject notification {subject_line}."
         )
 
     def _generate_recommended_actions(
@@ -186,7 +192,8 @@ class BreachClassifier:
         ]
         if breach.special_category_involved:
             actions.append(
-                "Treat as special category data — escalate to DPO and document Art. 9 considerations."
+                "Treat as special category data — escalate to DPO and "
+                "document Art. 9 considerations."
             )
         if severity in {SeverityLevel.HIGH, SeverityLevel.CRITICAL}:
             actions.extend(
@@ -201,7 +208,8 @@ class BreachClassifier:
             )
         if not breach.data_encrypted:
             actions.append(
-                "Review encryption controls for data at rest (Art. 32(1)(a)) as a priority remediation."
+                "Review encryption controls for data at rest (Art. 32(1)(a)) "
+                "as a priority remediation."
             )
         return actions
 

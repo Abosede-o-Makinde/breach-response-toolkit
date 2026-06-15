@@ -76,7 +76,6 @@ class NISTMapper:
         if mapping_key not in mappings:
             raise ValueError(f"Unknown breach type mapping: {breach_type.value}")
 
-        mapping = mappings[mapping_key]
         failed_controls = self._identify_failed_controls(breach_type, severity)
         recommended_controls = self._generate_recommendations(
             breach_type, failed_controls, severity
@@ -131,7 +130,10 @@ class NISTMapper:
                     function=NISTFunction.RESPOND,
                     category="RS.RP",
                     subcategory="RS.RP-1",
-                    recommendation="Execute incident response plan and document regulatory notifications",
+                    recommendation=(
+                        "Execute incident response plan and document "
+                        "regulatory notifications"
+                    ),
                     priority="IMMEDIATE",
                     gdpr_article="Art. 33(1)",
                 )

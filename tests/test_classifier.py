@@ -100,13 +100,17 @@ class TestBreachClassifier:
             special_category_involved=True,
             data_encrypted=False,
         )
-        diff = self.classifier.classify(with_special).score - self.classifier.classify(without).score
+        with_score = self.classifier.classify(with_special).score
+        without_score = self.classifier.classify(without).score
+        diff = with_score - without_score
         assert diff == pytest.approx(20.0)
 
     def test_scale_score_increases_with_record_count(self) -> None:
         low_count = _breach(data_type=DataType.BASIC_CONTACT, records_affected=5)
         high_count = _breach(data_type=DataType.BASIC_CONTACT, records_affected=5000)
-        assert self.classifier.classify(high_count).score > self.classifier.classify(low_count).score
+        low_score = self.classifier.classify(low_count).score
+        high_score = self.classifier.classify(high_count).score
+        assert high_score > low_score
 
     def test_score_clamped_between_0_and_100(self) -> None:
         extreme = _breach(

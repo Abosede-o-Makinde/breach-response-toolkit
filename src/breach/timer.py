@@ -92,7 +92,10 @@ class BreachTimer:
             AlertLevel.OK: "Within notification window — continue evidence gathering.",
             AlertLevel.WARNING: "48 hours elapsed — escalate to DPO and prepare ICO notification.",
             AlertLevel.CRITICAL: "68 hours elapsed — submit ICO notification immediately.",
-            AlertLevel.EXPIRED: "72-hour window exceeded — notify ICO without delay and document late submission.",
+            AlertLevel.EXPIRED: (
+                "72-hour window exceeded — notify ICO without delay and "
+                "document late submission."
+            ),
         }
         colour = colour_map[status.alert_level]
 

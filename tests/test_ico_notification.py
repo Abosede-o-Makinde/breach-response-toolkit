@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from src.breach.classifier import BreachClassifier
 from src.breach.ico_notification import ICONotificationGenerator
 from src.breach.timer import BreachTimer

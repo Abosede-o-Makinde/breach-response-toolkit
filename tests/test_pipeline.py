@@ -6,7 +6,6 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-import pytest
 from freezegun import freeze_time
 
 from src.models.breach_model import BreachInput

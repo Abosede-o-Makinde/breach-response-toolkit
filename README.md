@@ -42,30 +42,45 @@ Run individual modules or the full pipeline end-to-end with `--mode report`.
 ```bash
 pip install -r requirements.txt
 python main.py --help
+python main.py --version
 ```
 
 ---
 
-## Quick start
+## Commands
+
+All functionality runs through **`python main.py`**. Pick a `--mode` and the flags it needs.
+
+| Mode | Required flags | What you get |
+| ---- | -------------- | ------------ |
+| `report` | `--input breach.json` | Full pipeline — writes all four files under `--output` (default: `outputs/`) |
+| `timer` | `--detection` (ISO 8601 UTC), `--breach-id` | 72-hour countdown in the terminal |
+| `classify` | `--input breach.json` | Severity score and notification flags (JSON printed) |
+| `nist` | `--breach-type`, `--data-type`, `--severity` | NIST CSF failed controls (printed) |
+| `notify` | `--input breach.json` | ICO notification draft (`.txt` file) |
+
+Optional on any mode: `--output outputs/` (where files are written).
+
+### Examples
 
 ```bash
-# Full breach response — writes all artefacts to outputs/{breach_id}/
+# Full breach response — all artefacts under outputs/B-2024-001/
 python main.py --mode report --input sample_data/example_breach.json --output outputs/
 
-# 72-hour countdown only
-python main.py --mode timer --detection "2024-06-09T14:30:00Z" --breach-id "B-2024-001"
+# 72-hour countdown (use today's detection time for a live window)
+python main.py --mode timer --detection "2026-06-15T08:00:00Z" --breach-id "B-2024-001"
 
-# Severity classification from breach JSON
+# Severity classification
 python main.py --mode classify --input sample_data/example_breach.json
 
 # NIST CSF mapping
 python main.py --mode nist --breach-type confidentiality --data-type financial --severity HIGH
 
-# ICO notification draft for DPO review
-python main.py --mode notify --input sample_data/example_breach.json
+# ICO notification draft only
+python main.py --mode notify --input sample_data/example_breach.json --output outputs/
 ```
 
-### Output files
+### Output files (`--mode report`)
 
 Each full report run creates:
 

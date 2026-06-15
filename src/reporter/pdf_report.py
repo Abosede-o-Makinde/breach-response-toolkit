@@ -66,7 +66,13 @@ class BreachReportGenerator:
         pdf.set_text_color(*Colour.TEXT_DARK)
         pdf.ln(20)
         pdf.set_font("Helvetica", "B", 16)
-        pdf.cell(0, 10, self._safe_text("Personal Data Breach Incident Report"), new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(
+            0,
+            10,
+            self._safe_text("Personal Data Breach Incident Report"),
+            new_x="LMARGIN",
+            new_y="NEXT",
+        )
         pdf.ln(4)
         self._add_key_value_row(pdf, "Breach reference", report_data.breach.breach_id)
         self._add_key_value_row(
