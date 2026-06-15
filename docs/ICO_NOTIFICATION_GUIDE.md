@@ -1,6 +1,5 @@
 # ICO Notification Guide — Article 33(3) Field-by-Field
 
-> **Status:** Outline — full content to be completed during documentation phase.
 > **Audience:** DPOs preparing an ICO breach notification under UK GDPR Article 33.
 
 ## Overview

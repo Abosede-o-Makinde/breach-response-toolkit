@@ -1,6 +1,5 @@
 # Breach Response Guide — The First 72 Hours
 
-> **Status:** Outline — full content to be completed during documentation phase.
 > **Audience:** DPOs, security teams, and incident responders at UK organisations.
 
 ## What this guide covers

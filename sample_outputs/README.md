@@ -6,7 +6,7 @@ Pre-generated artefacts from `sample_data/example_breach.json`, produced by:
 python main.py --mode report --input sample_data/example_breach.json --output sample_outputs/
 ```
 
-These files are for README visitors and reviewers — no local run required to inspect output format.
+These files let you inspect output format without running the toolkit locally.
 
 | File | Description |
 | ---- | ----------- |

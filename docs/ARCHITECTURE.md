@@ -1,8 +1,5 @@
 # Architecture — breach-response-toolkit
 
-> **Status:** Scaffold complete — module logic not yet implemented.
-> **Version:** 1.0.0 (target) · **Deadline:** 22 June 2026
-
 ## Purpose
 
 Local-first Python CLI for UK GDPR breach response under Articles 33 and 34. Unifies five functions that organisations typically handle separately:
@@ -118,7 +115,7 @@ All external input must pass through `BreachInput` before any module processes i
 | `timer` | `python main.py --mode timer --detection "..."` | 72-hour countdown only |
 | `classify` | `python main.py --mode classify --input breach.json` | Severity scoring only |
 | `nist` | `python main.py --mode nist --breach-type ... --severity ...` | NIST mapping only |
-| `notify` | `python main.py --mode notify --breach-id ...` | ICO draft from existing log |
+| `notify` | `python main.py --mode notify --input breach.json` | ICO notification draft |
 
 ## Security controls
 
@@ -149,30 +146,12 @@ All external input must pass through `BreachInput` before any module processes i
 
 Both files are editable without changing Python code.
 
-## Test strategy (target)
+## Testing
 
-| Module | Coverage target | Test count |
-|--------|-----------------|------------|
-| `timer.py` | ≥ 95% | 12 |
-| `classifier.py` | ≥ 95% | 15 |
-| `nist_mapper.py` | ≥ 85% | 10 |
-| `evidence_log.py` | ≥ 85% | 8 |
-| `ico_notification.py` | ≥ 85% | 8 |
-| `pdf_report.py` | ≥ 75% | — |
-| Security | — | 6 |
-| **Total** | **≥ 85% overall** | **≥ 57** |
+The test suite in `tests/` covers each breach module, the full report pipeline, and security controls (input handling, path traversal prevention, local-only operation).
 
-## Implementation order
+```bash
+pytest tests/ -v
+```
 
-1. `timer.py` + tests
-2. `classifier.py` + tests
-3. `nist_mapper.py` + tests
-4. `evidence_log.py` + tests
-5. `ico_notification.py` + tests
-6. `pdf_report.py` + tests
-7. `pipeline.py` + `main.py` integration
-8. Sample outputs, docs, CI, v1.0.0 release
-
-## Portfolio context
-
-Part of a 9-project Data Protection Engineering portfolio for UK Global Talent Visa (Exceptional Promise). Project 1 (`dp-audit-toolkit`) is live. This is Project 2 (weeks 1–2, 9–22 June 2026).
+GitHub Actions runs ruff, black, and coverage checks on every push to `main`.
