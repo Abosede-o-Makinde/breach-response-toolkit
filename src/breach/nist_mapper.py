@@ -67,9 +67,12 @@ class NISTMapper:
         breach_type: BreachType,
         data_type: DataType,
         severity: SeverityLevel,
-        root_cause: str = "",
     ) -> NISTMappingResult:
-        """Return failed controls and recommendations for the given breach profile."""
+        """Return failed controls and recommendations for the given breach profile.
+
+        Mapping is driven by breach_type and severity. data_type is accepted
+        for pipeline consistency with classifier output.
+        """
         config = self._load_mappings()
         mapping_key = breach_type.name
         mappings = config.get("breach_type_mappings", {})
@@ -131,8 +134,7 @@ class NISTMapper:
                     category="RS.RP",
                     subcategory="RS.RP-1",
                     recommendation=(
-                        "Execute incident response plan and document "
-                        "regulatory notifications"
+                        "Execute incident response plan and document " "regulatory notifications"
                     ),
                     priority="IMMEDIATE",
                     gdpr_article="Art. 33(1)",

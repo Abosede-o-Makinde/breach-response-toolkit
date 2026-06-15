@@ -93,7 +93,7 @@ Orchestration lives in `src/pipeline.py` (`BreachReportPipeline`).
 |--------|------|-------|--------|
 | Timer | `src/breach/timer.py` | `detection_datetime`, `breach_id` | `TimerStatus` |
 | Classifier | `src/breach/classifier.py` | `BreachInput` | `ClassificationResult` |
-| NIST Mapper | `src/breach/nist_mapper.py` | `breach_type`, `data_type`, `severity` | `NISTMappingResult` |
+| NIST Mapper | `src/breach/nist_mapper.py` | `breach_type`, `severity` | `NISTMappingResult` |
 | Evidence Log | `src/breach/evidence_log.py` | `EvidenceLogEntry` | JSON + Markdown files |
 | ICO Notification | `src/breach/ico_notification.py` | breach + classification + timer | `DraftResult` (.txt) |
 | PDF Reporter | `src/reporter/pdf_report.py` | `BreachReportData` | PDF file |

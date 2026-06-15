@@ -26,7 +26,9 @@ Telephone: {{ dpo_telephone }}
 SECTION 3 — NATURE OF BREACH [Article 33(3)(a)]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type of breach:                    {{ breach_type }}
-Date/time breach detected (UTC):   {{ detection_datetime }}
+Description:                       {{ description }}
+{% if root_cause %}Root cause:                       {{ root_cause }}
+{% endif %}Date/time breach detected (UTC):   {{ detection_datetime }}
 Date/time breach notified to ICO:  {{ notification_datetime }}
 Time elapsed since detection:      {{ elapsed_hours }} hours
 Categories of personal data:

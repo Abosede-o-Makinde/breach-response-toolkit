@@ -43,6 +43,10 @@ class TestICONotification:
         assert sample_breach_input.dpo_contact.email in draft.text
         assert sample_breach_input.dpo_contact.telephone in draft.text
 
+    def test_description_in_notification_draft(self, sample_breach_input: BreachInput) -> None:
+        draft = _draft_for(sample_breach_input)
+        assert sample_breach_input.description in draft.text
+
     def test_missing_measures_taken_produces_validation_warning(
         self, sample_breach_input: BreachInput
     ) -> None:

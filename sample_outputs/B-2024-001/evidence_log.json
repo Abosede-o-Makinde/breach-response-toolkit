@@ -1,12 +1,13 @@
 {
   "breach_id": "B-2024-001",
   "schema_version": "1.0",
-  "created_utc": "2026-06-14T16:03:22.521327+00:00",
-  "last_updated_utc": "2026-06-14T16:03:22.521327+00:00",
+  "created_utc": "2026-06-15T09:18:22.210248+00:00",
+  "last_updated_utc": "2026-06-15T09:18:22.210248+00:00",
   "article_33_3_completeness_percent": 100.0,
   "article_33_3_fields": {
     "a_nature_of_breach": {
       "description": "Unauthorised access to customer financial records via SQL injection in the payment portal",
+      "root_cause": "Unpatched SQL injection vulnerability in payment portal — CVE-2024-XXXXX",
       "breach_type": "CONFIDENTIALITY",
       "categories_of_personal_data": [
         "bank account numbers",
@@ -41,13 +42,13 @@
     "controller_name": "Example Ltd",
     "ico_registration_number": "ZA123456",
     "timer_snapshot": {
-      "elapsed_hours": 17641.56,
+      "elapsed_hours": 17658.81,
       "remaining_hours": 0.0,
       "elapsed_percentage": 100.0,
       "alert_level": "EXPIRED",
       "notification_deadline": "2024-06-12T14:30:00+00:00",
       "is_expired": true,
-      "snapshot_utc": "2026-06-14T16:03:22.521327+00:00"
+      "snapshot_utc": "2026-06-15T09:18:22.210248+00:00"
     },
     "severity_classification": {
       "severity": "HIGH",
@@ -130,7 +131,7 @@
   },
   "audit_trail": [
     {
-      "timestamp_utc": "2026-06-14T16:03:22.521327+00:00",
+      "timestamp_utc": "2026-06-15T09:18:22.210248+00:00",
       "action": "LOG_CREATED",
       "actor": "breach-response-toolkit v1.0.0"
     }

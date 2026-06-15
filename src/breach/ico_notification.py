@@ -97,6 +97,8 @@ class ICONotificationGenerator:
             "dpo_email": str(breach.dpo_contact.email),
             "dpo_telephone": breach.dpo_contact.telephone,
             "breach_type": breach.breach_type.value.upper(),
+            "description": breach.description,
+            "root_cause": breach.root_cause.strip() or None,
             "detection_datetime": breach.detection_datetime.isoformat(),
             "notification_datetime": notification_datetime.isoformat(),
             "elapsed_hours": f"{timer.elapsed_hours:.2f}",

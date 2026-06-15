@@ -184,6 +184,7 @@ class EvidenceLog:
             "article_33_3_fields": {
                 "a_nature_of_breach": {
                     "description": breach.description,
+                    "root_cause": breach.root_cause,
                     "breach_type": breach.breach_type.value.upper(),
                     "categories_of_personal_data": breach.affected_data_categories,
                     "approximate_data_subjects": breach.estimated_data_subjects,

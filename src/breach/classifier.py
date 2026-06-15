@@ -58,9 +58,7 @@ class BreachClassifier:
         special_category_bonus = self._score_special_category(breach.special_category_involved)
         encryption_reduction = self._score_encryption(breach.data_encrypted)
 
-        raw_total = (
-            data_type_score + scale_score + special_category_bonus + encryption_reduction
-        )
+        raw_total = data_type_score + scale_score + special_category_bonus + encryption_reduction
         total = max(0.0, min(100.0, raw_total))
         severity = self._determine_severity(total)
 
@@ -72,9 +70,7 @@ class BreachClassifier:
             total=total,
         )
 
-        ico_required, subject_required = self._determine_notification_flags(
-            breach, severity, total
-        )
+        ico_required, subject_required = self._determine_notification_flags(breach, severity, total)
         recommended_actions = self._generate_recommended_actions(breach, severity)
         reasoning = self._generate_reasoning(
             breach,
@@ -168,12 +164,8 @@ class BreachClassifier:
             if breach.special_category_involved
             else "No Article 9 special category data identified in this assessment."
         )
-        ico_line = (
-            "required" if ico_required else "not indicated by score alone"
-        )
-        subject_line = (
-            "required" if subject_required else "not automatically indicated"
-        )
+        ico_line = "required" if ico_required else "not indicated by score alone"
+        subject_line = "required" if subject_required else "not automatically indicated"
         return (
             f"Severity assessed as {severity.value} (score {score:.1f}/100) "
             f"for breach {breach.breach_id}. Primary data category: {data_label}, "

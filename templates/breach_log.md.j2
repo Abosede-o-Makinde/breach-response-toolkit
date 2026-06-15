@@ -12,6 +12,7 @@
 | Field | Value |
 |-------|-------|
 | Description | {{ fields.a_nature_of_breach.description }} |
+| Root cause | {{ fields.a_nature_of_breach.root_cause or 'Not recorded' }} |
 | Breach type | {{ fields.a_nature_of_breach.breach_type }} |
 | Data categories | {{ fields.a_nature_of_breach.categories_of_personal_data | join(', ') }} |
 | Approx. data subjects | {{ fields.a_nature_of_breach.approximate_data_subjects }} |

@@ -84,6 +84,21 @@ class TestEvidenceLog:
         assert "c_likely_consequences" in fields
         assert "d_measures_taken" in fields
 
+    def test_root_cause_stored_in_evidence_log_json(
+        self, sample_breach_input: BreachInput, tmp_output_dir: Path
+    ) -> None:
+        breach = sample_breach_input.model_copy(
+            update={"root_cause": "Unpatched vulnerability in payment portal"}
+        )
+        entry = _build_entry(breach)
+        log = EvidenceLog(breach.breach_id, tmp_output_dir)
+        json_path = log.create(entry)
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+        assert (
+            payload["article_33_3_fields"]["a_nature_of_breach"]["root_cause"]
+            == "Unpatched vulnerability in payment portal"
+        )
+
     def test_update_appends_to_audit_trail(
         self, sample_breach_input: BreachInput, tmp_output_dir: Path
     ) -> None:

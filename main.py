@@ -54,10 +54,8 @@ def _load_breach_input(input_path: Path) -> BreachInput:
 @click.option(
     "--data-type",
     type=click.Choice([item.value for item in DataType]),
+    help="Data type for standalone NIST mapping (optional; defaults to basic_contact).",
 )
-@click.option("--records", type=int, default=0)
-@click.option("--special-category/--no-special-category", default=False)
-@click.option("--encryption/--no-encryption", default=False)
 @click.option(
     "--breach-type",
     type=click.Choice([item.value for item in BreachType]),
@@ -77,9 +75,6 @@ def cli(
     breach_id: str,
     detection: str | None,
     data_type: str | None,
-    records: int,
-    special_category: bool,
-    encryption: bool,
     breach_type: str | None,
     severity: str | None,
 ) -> None:
@@ -93,9 +88,6 @@ def cli(
             "breach_id": breach_id,
             "detection": detection,
             "data_type": data_type,
-            "records": records,
-            "special_category": special_category,
-            "encryption": encryption,
             "breach_type": breach_type,
             "severity": severity,
         }
@@ -122,9 +114,6 @@ def run(ctx: click.Context) -> None:
             _run_nist(options)
         elif mode == "notify":
             _run_notify(options)
-    except NotImplementedError as exc:
-        console.print(f"[yellow]Not yet implemented:[/yellow] {exc}")
-        sys.exit(2)
     except ValidationError as exc:
         console.print("[red]Validation error:[/red]")
         console.print(exc)
@@ -135,9 +124,7 @@ def _run_report(options: dict) -> None:
     if options["input_path"]:
         breach = _load_breach_input(options["input_path"])
     else:
-        raise click.ClickException(
-            "Report mode requires --input <breach.json> until interactive prompts are implemented."
-        )
+        raise click.ClickException("Report mode requires --input <breach.json>.")
 
     pipeline = BreachReportPipeline(output_dir=options["output_dir"])
     result = pipeline.run(breach)
@@ -212,9 +199,7 @@ def _run_classify(options: dict) -> None:
     if options["input_path"]:
         breach = _load_breach_input(options["input_path"])
     else:
-        raise click.ClickException(
-            "Classify mode requires --input <breach.json> until CLI flags are wired."
-        )
+        raise click.ClickException("Classify mode requires --input <breach.json>.")
     classifier = BreachClassifier()
     result = classifier.classify(breach)
     console.print(result.model_dump_json(indent=2))

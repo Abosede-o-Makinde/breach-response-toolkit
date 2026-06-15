@@ -86,9 +86,7 @@ class TestBreachReportPipeline:
             resolved = Path(path_str).resolve()
             assert str(resolved).startswith(str(base))
 
-    def test_pdf_is_non_empty(
-        self, sample_breach_input: BreachInput, tmp_output_dir: Path
-    ) -> None:
+    def test_pdf_is_non_empty(self, sample_breach_input: BreachInput, tmp_output_dir: Path) -> None:
         breach = _breach_with_fixed_detection(sample_breach_input)
         with freeze_time(FROZEN_NOW):
             result = BreachReportPipeline(tmp_output_dir).run(breach)

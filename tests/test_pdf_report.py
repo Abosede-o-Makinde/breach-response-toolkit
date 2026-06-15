@@ -46,9 +46,7 @@ def _build_report_data(breach: BreachInput) -> BreachReportData:
         )
         evidence_log = EvidenceLog(breach.breach_id, Path("outputs"))
         validation = evidence_log.validate_article_33_3(entry)
-        ico_draft = ICONotificationGenerator().generate(
-            breach, classification, timer_status
-        )
+        ico_draft = ICONotificationGenerator().generate(breach, classification, timer_status)
 
     nist_dict = evidence_log._nist_to_dict(nist)
     base = Path("outputs") / breach.breach_id

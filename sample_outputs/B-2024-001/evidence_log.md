@@ -1,8 +1,8 @@
 # Breach Evidence Log — B-2024-001
 
 > **Schema version:** 1.0
-> **Created (UTC):** 2026-06-14T16:03:22.521327+00:00
-> **Last updated (UTC):** 2026-06-14T16:03:22.521327+00:00
+> **Created (UTC):** 2026-06-15T09:18:22.210248+00:00
+> **Last updated (UTC):** 2026-06-15T09:18:22.210248+00:00
 > **Article 33(3) completeness:** 100.0%
 
 ---
@@ -12,6 +12,7 @@
 | Field | Value |
 |-------|-------|
 | Description | Unauthorised access to customer financial records via SQL injection in the payment portal |
+| Root cause | Unpatched SQL injection vulnerability in payment portal — CVE-2024-XXXXX |
 | Breach type | CONFIDENTIALITY |
 | Data categories | bank account numbers, sort codes, full names, transaction references |
 | Approx. data subjects | 1500 |
@@ -67,4 +68,4 @@
 | Timestamp (UTC) | Action | Actor |
 |-----------------|--------|-------|
 
-| 2026-06-14T16:03:22.521327+00:00 | LOG_CREATED | breach-response-toolkit v1.0.0 |
+| 2026-06-15T09:18:22.210248+00:00 | LOG_CREATED | breach-response-toolkit v1.0.0 |

@@ -118,9 +118,7 @@ class BreachReportGenerator:
         )
         ico_flag = "REQUIRED" if classification.ico_notification_required else "NOT REQUIRED"
         subject_flag = (
-            "REQUIRED (Art. 34)"
-            if classification.subject_notification_required
-            else "NOT REQUIRED"
+            "REQUIRED (Art. 34)" if classification.subject_notification_required else "NOT REQUIRED"
         )
         self._add_key_value_row(pdf, "ICO notification", ico_flag)
         self._add_key_value_row(pdf, "Subject notification", subject_flag)
@@ -130,6 +128,12 @@ class BreachReportGenerator:
         pdf.cell(0, 8, "Breach description", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", size=10)
         self._write_paragraph(pdf, report_data.breach.description)
+        if report_data.breach.root_cause.strip():
+            pdf.ln(2)
+            pdf.set_font("Helvetica", "B", 11)
+            pdf.cell(0, 8, "Root cause", new_x="LMARGIN", new_y="NEXT")
+            pdf.set_font("Helvetica", size=10)
+            self._write_paragraph(pdf, report_data.breach.root_cause)
 
     def _add_timer_section(self, pdf: FPDF, report_data: BreachReportData) -> None:
         pdf.add_page()

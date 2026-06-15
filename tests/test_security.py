@@ -88,6 +88,10 @@ class TestInputSecurity:
         assert payload in log_text
         assert payload in md_text
         assert payload in result.report_data.breach.description
+        ico_text = (tmp_output_dir / breach.breach_id / "ico_notification.txt").read_text(
+            encoding="utf-8"
+        )
+        assert payload in ico_text
         assert "<script>" in log_text
 
     def test_output_files_stay_within_output_directory(
