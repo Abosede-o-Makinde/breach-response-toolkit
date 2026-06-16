@@ -4,10 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GDPR Art. 33/34](https://img.shields.io/badge/GDPR-Art.%2033%2F34-important)](docs/ICO_NOTIFICATION_GUIDE.md)
 
-> Python toolkit for managing data breach incidents under UK GDPR Articles 33 and 34.
-> 72-hour ICO countdown · Severity classifier · NIST CSF mapper · Article 33(3) evidence log
+ Python toolkit for managing data breach incidents under UK GDPR Articles 33 and 34.
+ 72-hour ICO countdown · Severity classifier · NIST CSF mapper · Article 33(3) evidence log
 
----
+
 
 ## The problem this solves
 
@@ -20,7 +20,7 @@ Under UK GDPR **Article 33**, every data controller must notify the ICO within *
 
 **breach-response-toolkit** handles all of it from the command line. Free. Open source. Local-only.
 
----
+
 
 ## Features
 
@@ -45,7 +45,6 @@ python main.py --help
 python main.py --version
 ```
 
----
 
 ## Commands
 
@@ -94,7 +93,6 @@ outputs/{breach_id}/
 
 Pre-generated examples (no local run required): [`sample_outputs/B-2024-001/`](sample_outputs/B-2024-001/)
 
----
 
 ## GDPR coverage
 
@@ -107,13 +105,12 @@ Pre-generated examples (no local run required): [`sample_outputs/B-2024-001/`](s
 
 Outputs are **decision-support drafts for DPO review** — not legal advice and not auto-submitted to the ICO.
 
----
+
 
 ## Why local-only?
 
 breach-response-toolkit makes **no network calls**. All processing happens on your machine. Breach evidence should not leave your controlled environment until you choose to submit it to the ICO.
 
----
 
 ## Repository structure
 
@@ -130,7 +127,6 @@ breach-response-toolkit/
 └── docs/                      # Architecture and practitioner guides
 ```
 
----
 
 ## Documentation
 
@@ -138,7 +134,6 @@ breach-response-toolkit/
 - [Breach Response Guide](docs/BREACH_RESPONSE_GUIDE.md) — plain-English 72-hour procedure
 - [ICO Notification Guide](docs/ICO_NOTIFICATION_GUIDE.md) — Article 33(3) field-by-field reference
 
----
 
 ## Licence
 
